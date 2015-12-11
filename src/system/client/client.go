@@ -1,4 +1,6 @@
-package system
+//Copyright 2015 Libing. All right reserved.
+
+package client
 
 import (
 	"bytes"
