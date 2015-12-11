@@ -1,3 +1,5 @@
+//Copyright 2015 Libing. All right reserved.
+
 package main
 
 import "system/server"
