@@ -1,6 +1,6 @@
 //Copyright 2015 Libing. All right reserved.
 
-package server
+package communicate
 
 import (
 	"bytes"
@@ -32,10 +32,7 @@ type Msg struct {
 }
 
 type Server struct {
-	net         string
-	addr        string
-	rawHandler  func(net.Conn, chan<- []byte) error
-	dataHandler func(<-chan []byte) error
+	CommunicateEntity
 }
 
 func Bytes2Int32(bs []byte) int32 {
@@ -63,7 +60,7 @@ func NewServer(net, addr string,
 		dataHandler = defaultDataHandler
 	}
 
-	return &Server{net: net, addr: addr, rawHandler: rawHandler, dataHandler: dataHandler}
+	return &Server{CommunicateEntity{net: net, addr: addr, rawHandler: rawHandler, dataHandler: dataHandler}}
 }
 
 func ErrorHandler(err error, isExit bool) {

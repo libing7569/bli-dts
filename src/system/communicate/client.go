@@ -1,6 +1,6 @@
 //Copyright 2015 Libing. All right reserved.
 
-package client
+package communicate
 
 import (
 	"bytes"
@@ -13,10 +13,7 @@ import (
 )
 
 type Client struct {
-	net         string
-	addr        string
-	rawHandler  func(net.Conn, chan<- []byte) error
-	dataHandler func(<-chan []byte) error
+	CommunicateEntity
 }
 
 func main() {

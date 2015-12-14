@@ -1,9 +1,6 @@
-package main
+package common
 
-import (
-	"fmt"
-	"utils"
-)
+import "utils"
 
 //type TaskParticle struct {
 //preconds []uint8
@@ -29,6 +26,7 @@ func (task *Task) UnSerialize(t utils.SerialType, bs []byte) {
 	utils.UnSerialize(utils.JSON_SERIAL, bs, task)
 }
 
+/*
 func main() {
 	t := &Task{"hello"}
 	bs := t.Serialize(utils.JSON_SERIAL)
@@ -38,3 +36,4 @@ func main() {
 	tt.UnSerialize(utils.JSON_SERIAL, bs)
 	fmt.Println(tt)
 }
+*/
