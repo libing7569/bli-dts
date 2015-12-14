@@ -1,42 +1,39 @@
 //Copyright 2015 Libing. All right reserved.
 package main
 
-import (
-	"bytes"
-	"fmt"
-	"net"
-	"time"
-	"utils"
-)
+import "system/communicate"
 
 func main() {
-	conn, err := net.Dial("tcp", "localhost:9999")
-	fmt.Println(conn, err)
-	buf := bytes.NewBuffer(make([]byte, 0))
+	c := communicate.NewClient("tcp", "localhost:9999")
+	c.SendStrings(1, "Hello world, hi li", "Hi ok", "{\"name\":\"hello\"}")
 
-	var l int32 = 10
+	//conn, err := net.Dial("tcp", "localhost:9999")
+	//fmt.Println(conn, err)
+	//buf := bytes.NewBuffer(make([]byte, 0))
 
-	buf.WriteByte(1)
-	buf.Write(utils.IntToBytes(l))
-	buf.Write([]byte("{hello:99}"))
+	//var l int32 = 10
 
-	var l2 int32 = 7
+	//buf.WriteByte(1)
+	//buf.Write(utils.IntToBytes(l))
+	//buf.Write([]byte("{hello:99}"))
 
-	for i := 0; i < 10; i++ {
-		buf.WriteByte(2)
-		buf.Write(utils.IntToBytes(l2))
-		buf.Write([]byte("{t"))
+	//var l2 int32 = 7
 
-		conn.Write(buf.Bytes())
-		time.Sleep(5 * time.Second)
+	//for i := 0; i < 10; i++ {
+	//buf.WriteByte(2)
+	//buf.Write(utils.IntToBytes(l2))
+	//buf.Write([]byte("{t"))
 
-		buf.Reset()
-		buf.Write([]byte("i:99}"))
-		conn.Write(buf.Bytes())
-		buf.Reset()
-	}
+	//conn.Write(buf.Bytes())
+	//time.Sleep(5 * time.Second)
 
-	bs := make([]byte, 1024)
-	n, err := conn.Read(bs)
-	fmt.Println(string(bs[:n]), n, err)
+	//buf.Reset()
+	//buf.Write([]byte("i:99}"))
+	//conn.Write(buf.Bytes())
+	//buf.Reset()
+	//}
+
+	//bs := make([]byte, 1024)
+	//n, err := conn.Read(bs)
+	//fmt.Println(string(bs[:n]), n, err)
 }

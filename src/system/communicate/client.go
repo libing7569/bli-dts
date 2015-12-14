@@ -13,7 +13,32 @@ import (
 )
 
 type Client struct {
-	CommunicateEntity
+	net  string
+	addr string
+}
+
+func NewClient(net, addr string) *Client {
+	return &Client{net: net, addr: addr}
+}
+
+func (c *Client) SendStrings(t byte, str ...string) error {
+	conn, err := net.Dial("tcp", "localhost:9999")
+	buf := bytes.NewBuffer(make([]byte, 0))
+
+	for _, v := range str {
+		buf.WriteByte(t)
+		buf.Write(utils.IntToBytes(int32(len(v))))
+		buf.Write([]byte(v))
+		n, err := conn.Write(buf.Bytes())
+		if err != nil {
+			logs.Logger.Errorf("client send error")
+			return err
+		}
+		buf.Reset()
+		logs.Logger.Debugf("send %v bytes", n)
+	}
+
+	return err
 }
 
 func main() {

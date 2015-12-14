@@ -32,7 +32,10 @@ type Msg struct {
 }
 
 type Server struct {
-	CommunicateEntity
+	net         string
+	addr        string
+	rawHandler  func(net.Conn, chan<- []byte) error
+	dataHandler func(<-chan []byte) error
 }
 
 func Bytes2Int32(bs []byte) int32 {
@@ -60,7 +63,7 @@ func NewServer(net, addr string,
 		dataHandler = defaultDataHandler
 	}
 
-	return &Server{CommunicateEntity{net: net, addr: addr, rawHandler: rawHandler, dataHandler: dataHandler}}
+	return &Server{net: net, addr: addr, rawHandler: rawHandler, dataHandler: dataHandler}
 }
 
 func ErrorHandler(err error, isExit bool) {
