@@ -4,11 +4,11 @@ package communicate
 
 import (
 	"bytes"
-	"encoding/binary"
 	"errors"
 	"net"
 	"os"
 
+	"utils"
 	"utils/logs"
 )
 
@@ -38,19 +38,19 @@ type Server struct {
 	dataHandler func(<-chan []byte) error
 }
 
-func Bytes2Int32(bs []byte) int32 {
-	var n int32
-	buf := bytes.NewBuffer(bs)
-	err := binary.Read(buf, binary.BigEndian, &n)
-	ErrorHandler(err, true)
-	return n
-}
+//func Bytes2Int32(bs []byte) int32 {
+//var n int32
+//buf := bytes.NewBuffer(bs)
+//err := binary.Read(buf, binary.BigEndian, &n)
+//ErrorHandler(err, true)
+//return n
+//}
 
-func IntToBytes(i interface{}) []byte {
-	buf := bytes.NewBuffer(make([]byte, 0))
-	binary.Write(buf, binary.BigEndian, i)
-	return buf.Bytes()
-}
+//func IntToBytes(i interface{}) []byte {
+//buf := bytes.NewBuffer(make([]byte, 0))
+//binary.Write(buf, binary.BigEndian, i)
+//return buf.Bytes()
+//}
 
 func NewServer(net, addr string,
 	rawHandler func(conn net.Conn, c chan<- []byte) error,
@@ -95,7 +95,7 @@ func scanBuf2ExtractMsg(buf *bytes.Buffer, c chan<- []byte) {
 			break
 		}
 
-		dataLen := int(Bytes2Int32(bs[1 : 1+MSG_DATA_LEN_SIZE]))
+		dataLen := int(utils.Bytes2Int32(bs[1 : 1+MSG_DATA_LEN_SIZE]))
 
 		logs.Logger.Debugf("extract data length: %v", dataLen)
 		if len(bs) < MSG_TYPE_SIZE+MSG_DATA_LEN_SIZE+dataLen {

@@ -12,6 +12,6 @@ func main() {
 	c.SendStrings(5, "this is example4, hi bli", "Hi ok4", "{\"name\":\"world4\"}")
 	c.Close()
 	c.ReConnect()
-	c.SendStrings(6, "this is example6, hi bli", "Hi ok4", "{\"name\":\"world6\"}")
+	c.SendStrings(6, "-----------------this is example6, hi bli", "Hi ok6", "{\"name\":\"world6\"}")
 
 }
