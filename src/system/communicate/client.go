@@ -15,21 +15,46 @@ import (
 type Client struct {
 	net  string
 	addr string
+	conn net.Conn
 }
 
 func NewClient(net, addr string) *Client {
-	return &Client{net: net, addr: addr}
+	cli := &Client{net: net, addr: addr, conn: nil}
+	cli.getConn()
+	return cli
+}
+
+func (c *Client) getConn() error {
+	if c.conn != nil {
+		c.conn.Close()
+	}
+
+	conn, err := net.Dial(c.net, c.addr)
+	if err != nil {
+		logs.Logger.Debugf("Get Client Conn Error: %v", err)
+	} else {
+		c.conn = conn
+	}
+
+	return err
+}
+
+func (c *Client) ReConnect() {
+	c.getConn()
+}
+
+func (c *Client) Close() {
+	c.conn.Close()
 }
 
 func (c *Client) SendStrings(t byte, str ...string) error {
-	conn, err := net.Dial("tcp", "localhost:9999")
 	buf := bytes.NewBuffer(make([]byte, 0))
 
 	for _, v := range str {
 		buf.WriteByte(t)
 		buf.Write(utils.IntToBytes(int32(len(v))))
 		buf.Write([]byte(v))
-		n, err := conn.Write(buf.Bytes())
+		n, err := c.conn.Write(buf.Bytes())
 		if err != nil {
 			logs.Logger.Errorf("client send error")
 			return err
@@ -38,7 +63,7 @@ func (c *Client) SendStrings(t byte, str ...string) error {
 		logs.Logger.Debugf("send %v bytes", n)
 	}
 
-	return err
+	return nil
 }
 
 func main() {

@@ -6,34 +6,12 @@ import "system/communicate"
 func main() {
 	c := communicate.NewClient("tcp", "localhost:9999")
 	c.SendStrings(1, "Hello world, hi li", "Hi ok", "{\"name\":\"hello\"}")
+	c.SendStrings(2, "this is example1, hi bli", "Hi ok1", "{\"name\":\"world1\"}")
+	c.SendStrings(3, "this is example2, hi bli", "Hi ok2", "{\"name\":\"world2\"}")
+	c.SendStrings(4, "this is example3, hi bli", "Hi ok3", "{\"name\":\"world3\"}")
+	c.SendStrings(5, "this is example4, hi bli", "Hi ok4", "{\"name\":\"world4\"}")
+	c.Close()
+	c.ReConnect()
+	c.SendStrings(6, "this is example6, hi bli", "Hi ok4", "{\"name\":\"world6\"}")
 
-	//conn, err := net.Dial("tcp", "localhost:9999")
-	//fmt.Println(conn, err)
-	//buf := bytes.NewBuffer(make([]byte, 0))
-
-	//var l int32 = 10
-
-	//buf.WriteByte(1)
-	//buf.Write(utils.IntToBytes(l))
-	//buf.Write([]byte("{hello:99}"))
-
-	//var l2 int32 = 7
-
-	//for i := 0; i < 10; i++ {
-	//buf.WriteByte(2)
-	//buf.Write(utils.IntToBytes(l2))
-	//buf.Write([]byte("{t"))
-
-	//conn.Write(buf.Bytes())
-	//time.Sleep(5 * time.Second)
-
-	//buf.Reset()
-	//buf.Write([]byte("i:99}"))
-	//conn.Write(buf.Bytes())
-	//buf.Reset()
-	//}
-
-	//bs := make([]byte, 1024)
-	//n, err := conn.Read(bs)
-	//fmt.Println(string(bs[:n]), n, err)
 }
