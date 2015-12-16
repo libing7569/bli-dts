@@ -9,7 +9,7 @@ import (
 func DataIntegrityCheck(data, sum []byte) bool {
 	csum := GetMd5(data)
 
-	if len(sum) != len(csum) {
+	if data == nil || sum == nil || (len(sum) != len(csum)) {
 		return false
 	}
 
