@@ -1,0 +1,6 @@
+package msg
+
+message Task {
+	required string name;
+	repeated string args;
+}
