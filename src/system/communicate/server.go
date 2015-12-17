@@ -38,20 +38,6 @@ type Server struct {
 	dataHandler func(<-chan []byte) error
 }
 
-//func Bytes2Int32(bs []byte) int32 {
-//var n int32
-//buf := bytes.NewBuffer(bs)
-//err := binary.Read(buf, binary.BigEndian, &n)
-//ErrorHandler(err, true)
-//return n
-//}
-
-//func IntToBytes(i interface{}) []byte {
-//buf := bytes.NewBuffer(make([]byte, 0))
-//binary.Write(buf, binary.BigEndian, i)
-//return buf.Bytes()
-//}
-
 func NewServer(net, addr string,
 	rawHandler func(conn net.Conn, c chan<- []byte) error,
 	dataHandler func(c <-chan []byte) error) *Server {
